@@ -1,5 +1,4 @@
-import dotenv from "dotenv";
-dotenv.config();
+
 import { getUsers, getUserById } from "./models.js";
 
 // Llamamos a getUsers y mostramos el resultado en consola

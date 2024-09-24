@@ -1,9 +1,12 @@
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { randomUUID, createHash } from "crypto";
+import { handleError } from "./utils/handleError.js";
+import dotenv from "dotenv";
+dotenv.config();
 //const hash = createHash("sha256").update(password).digest("hex");
 
-const PATH_FILE_USER = "./data/users.json";
-const PATH_FILE_ERROR = "./error/log.json";
+const PATH_FILE_USER = process.env.PATH_FILE_USER;
+const PATH_FILE_ERROR = process.env.PATH_FILE_ERROR;
 
 //Si no existe el archivo debe crearlo como un array vacío
 const getUsers = () => {
@@ -32,15 +35,7 @@ const getUserById = (id) => {
 
       return user;
    } catch (error) {
-      const fileError = JSON.parse(readFileSync(PATH_FILE_ERROR, "utf-8"));
-      const newError = {
-         id: randomUUID(),
-         type: error.message,
-         date: new Date().toLocaleString(),
-      };
-      fileError.push(newError);
-      writeFileSync("./error/log.json", JSON.stringify(fileError));
-      return error.message;
+      handleError(error, PATH_FILE_ERROR);
    }
 };
 
