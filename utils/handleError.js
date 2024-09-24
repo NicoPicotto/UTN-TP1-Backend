@@ -15,6 +15,7 @@ const handleError = (error, path) => {
 
    fileError.push(newError);
    writeFileSync(path, JSON.stringify(fileError));
+   console.error(`Error: ${error.message}`);
    return error.message;
 };
 
