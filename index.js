@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
-import { getUsers } from "./models.js";
+import { getUsers, getUserById } from "./models.js";
 
 // Llamamos a getUsers y mostramos el resultado en consola
-const users = getUsers();
-console.log("Usuarios:", users);
+const idToSearch = process.argv[2];
+const user = getUserById(idToSearch);
