@@ -9,7 +9,6 @@ dotenv.config();
 const PATH_FILE_USER = process.env.PATH_FILE_USER;
 const PATH_FILE_ERROR = process.env.PATH_FILE_ERROR;
 
-//Si no existe el archivo debe crearlo como un array vacío
 const getUsers = () => {
    try {
       if (!existsSync(PATH_FILE_USER)) {
@@ -69,11 +68,35 @@ const addUser = (userData) => {
    }
 };
 
-//se puede modificar todo menos el ID, si se modifica la pass debe ser hasheada de nuevo
-//Si se cambia email validar que este no exista
-const updateUser = (userData) => {
+const updateUser = (id, userData) => {
    try {
-   } catch (error) {}
+      const users = getUsers();
+
+      const userIndex = users.findIndex((user) => user.id === id);
+
+      if (userIndex === -1) {
+         throw new Error(`No se encontró el usuario con el ID: ${id}`);
+      }
+
+      //Este if capaz está un poco rebuscado pero no sé cómo lo puedo mejorar
+      if (
+         userData.email &&
+         users.some((u) => u.email === userData.email && u.id !== id)
+      ) {
+         throw new Error("Ya existe un usuario registrado con ese email");
+      }
+
+      const updatedUser = updateUserObject(users[userIndex], userData);
+
+      users[userIndex] = updatedUser;
+
+      writeFileSync(PATH_FILE_USER, JSON.stringify(users));
+      console.log("Usuario actualizado correctamente:", updatedUser);
+      return updatedUser;
+   } catch (error) {
+      handleError(error, process.env.PATH_FILE_ERROR);
+      return null;
+   }
 };
 
 const deleteUser = (id) => {

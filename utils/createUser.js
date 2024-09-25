@@ -1,9 +1,8 @@
 import { randomUUID, createHash } from "node:crypto";
-//Obtener los argumentos pasados por terminal que vienen del index
-//Desarrollar las funciones que crean los objetos para añadir y actualizar usuario
-//Controlas los errores
 
-const createUserObject = ({ nombre, apellido, email, password }) => {
+const createUserObject = (userData) => {
+   const { nombre, apellido, email, password } = userData;
+   
    return {
       id: randomUUID(),
       nombre,
@@ -14,9 +13,20 @@ const createUserObject = ({ nombre, apellido, email, password }) => {
    };
 };
 
-const updateUserObject = (args) => {
-   try {
-   } catch (error) {}
+const updateUserObject = (user, updatedData) => {
+   const { nombre, apellido, email, password } = updatedData;
+
+   const updatedUser = {
+      ...user,
+      nombre: nombre || user.nombre,
+      apellido: apellido || user.apellido,
+      email: email || user.email,
+      password: password
+         ? createHash("sha256").update(password).digest("hex")
+         : user.password,
+   };
+
+   return updatedUser;
 };
 
 export { createUserObject, updateUserObject };

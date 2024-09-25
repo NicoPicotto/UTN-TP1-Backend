@@ -6,6 +6,8 @@ import {
    deleteUser,
 } from "./models.js";
 
+let nombre, apellido, email, password;
+
 const comando = process.argv[2];
 const args = process.argv.slice(3);
 
@@ -24,8 +26,14 @@ switch (comando) {
       break;
 
    case "addUser":
-      const [nombre, apellido, email, password] = args;
+      [nombre, apellido, email, password] = args;
       addUser({ nombre, apellido, email, password });
+      break;
+
+   case "updateUser":
+      const userId = args[0];
+      [nombre, apellido, email, password] = args.slice(1);
+      updateUser(userId, { nombre, apellido, email, password });
       break;
 
    default:
