@@ -43,6 +43,6 @@ switch (comando) {
 
    default:
       console.error(
-         "Comando no reconocido. Debes usar getUsers, getUserById, addUser"
+         "Comando no reconocido. Para ver la lista de comandos disponibles, ejecutá: npm run instrucciones"
       );
 }
