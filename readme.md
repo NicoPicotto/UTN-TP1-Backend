@@ -98,14 +98,13 @@ El sistema captura y registra cualquier error que ocurra durante la ejecución d
 
 -  **ID del error**
 -  **Tipo de error**
--  **Mensaje de error**
 -  **Fecha y hora**
 
 Esto facilita la depuración y el seguimiento de problemas en la aplicación.
 
 ## Notas
 
--  Asegúrate de tener **Node.js** instalado en tu sistema para ejecutar la aplicación.
+-  Debés contar con **Node.js** instalado en tu sistema para ejecutar la aplicación.
 -  Los **IDs de usuario** son generados automáticamente utilizando UUID al crear un nuevo usuario.
 -  Este proyecto es parte de la **diplomatura Full Stack de la UTN BA** y representa el primer trabajo práctico de Backend.
 
@@ -115,9 +114,9 @@ Esto facilita la depuración y el seguimiento de problemas en la aplicación.
 ├── index.js
 ├── models.js
 ├── utils
-│   ├── handleError.js
-│   ├── createUser.js
-│   ├── instrucciones.js
+│   └── handleError.js
+│   └── createUser.js
+│   └── instrucciones.js
 ├── data
 │   └── users.json
 ├── error
