@@ -72,22 +72,25 @@ const updateUser = (id, userData) => {
    try {
       const users = getUsers();
 
-      const userIndex = users.findIndex((user) => user.id === id);
+      const user = users.find((user) => user.id === id);
 
-      if (userIndex === -1) {
+      if (!user) {
          throw new Error(`No se encontró el usuario con el ID: ${id}`);
       }
 
-      //Este if capaz está un poco rebuscado pero no sé cómo lo puedo mejorar
-      if (
-         userData.email &&
-         users.some((u) => u.email === userData.email && u.id !== id)
-      ) {
-         throw new Error("Ya existe un usuario registrado con ese email");
+      if (userData.email) {
+         const emailExists = users.find(
+            (u) => u.email === userData.email && u.id !== id
+         );
+         if (emailExists) {
+            throw new Error("Ya existe un usuario registrado con ese email");
+         }
       }
 
-      const updatedUser = updateUserObject(users[userIndex], userData);
+      const updatedUser = updateUserObject(user, userData);
 
+      //Esta parte capaz está un poco rebuscada pero sino lo que me pasa es que me da el mensaje de exito con el usuario actualizado pero me guarda siempre el array original :/
+      const userIndex = users.findIndex((u) => u.id === id);
       users[userIndex] = updatedUser;
 
       writeFileSync(PATH_FILE_USER, JSON.stringify(users));
@@ -113,7 +116,6 @@ const deleteUser = (id) => {
       writeFileSync(PATH_FILE_USER, JSON.stringify(users));
       console.log("Usuario eliminado correctamente:", deletedUser);
       return deletedUser;
-      
    } catch (error) {
       handleError(error, process.env.PATH_FILE_ERROR);
       return null;
