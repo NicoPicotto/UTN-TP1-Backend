@@ -4,7 +4,6 @@ import { handleError } from "./utils/handleError.js";
 import { createUserObject, updateUserObject } from "./utils/createUser.js";
 import dotenv from "dotenv";
 dotenv.config();
-//const hash = createHash("sha256").update(password).digest("hex");
 
 const PATH_FILE_USER = process.env.PATH_FILE_USER;
 const PATH_FILE_ERROR = process.env.PATH_FILE_ERROR;
@@ -44,7 +43,6 @@ const addUser = (userData) => {
    try {
       const { nombre, apellido, email, password } = userData;
 
-      /*Inicio de bloque de manejo de errores*/
       if (!nombre || !apellido || !email || !password) {
          throw new Error(
             "Faltan campos obligatorios: nombre, apellido, email o password"
@@ -55,7 +53,6 @@ const addUser = (userData) => {
       if (users.some((user) => user.email === email)) {
          throw new Error("Ya existe un usuario registrado con ese email");
       }
-      /*Fin de bloque de manejo de errores*/
 
       const newUser = createUserObject({ nombre, apellido, email, password });
       users.push(newUser);
