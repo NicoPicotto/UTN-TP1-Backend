@@ -101,7 +101,23 @@ const updateUser = (id, userData) => {
 
 const deleteUser = (id) => {
    try {
-   } catch (error) {}
+      const users = getUsers();
+
+      const userIndex = users.findIndex((user) => user.id === id);
+
+      if (userIndex === -1) {
+         throw new Error(`No se encontró el usuario con el ID: ${id}`);
+      }
+
+      const deletedUser = users.splice(userIndex, 1)[0];
+      writeFileSync(PATH_FILE_USER, JSON.stringify(users));
+      console.log("Usuario eliminado correctamente:", deletedUser);
+      return deletedUser;
+      
+   } catch (error) {
+      handleError(error, process.env.PATH_FILE_ERROR);
+      return null;
+   }
 };
 
 export { getUsers, getUserById, addUser, updateUser, deleteUser };

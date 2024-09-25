@@ -31,9 +31,14 @@ switch (comando) {
       break;
 
    case "updateUser":
-      const userId = args[0];
+      const userIdUpdate = args[0];
       [nombre, apellido, email, password] = args.slice(1);
-      updateUser(userId, { nombre, apellido, email, password });
+      updateUser(userIdUpdate, { nombre, apellido, email, password });
+      break;
+
+   case "deleteUser":
+      const userIdDelete = args[0];
+      deleteUser(userIdDelete);
       break;
 
    default:
